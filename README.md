@@ -7,6 +7,7 @@ tools
 - [Serilog](https://serilog.net/) for logging
 - [Swagger](https://swagger.io/) testing the api / Documenting it
 - [Postman](https://www.postman.com/) for more in depth testing of my API
+- [CosmosDB](https://azure.microsoft.com/en-us/products/cosmos-db/) [docs](https://learn.microsoft.com/en-us/azure/cosmos-db/nosql/) for the Database layer, this is new to me so still learning this
 
 > I may not use Seq
 - [Seq](https://datalust.co/seq) for parsing through logs can read logs from many apps
