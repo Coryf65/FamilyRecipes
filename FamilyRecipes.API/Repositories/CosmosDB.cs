@@ -3,70 +3,50 @@
 namespace FamilyRecipes.API.Repositories;
 
 public class CosmosDB : IDBConnector
-{
-	private readonly IConfiguration _config;
-	public string EndPointUrl { private get; init; }
-	public string ApiKey { private get; init; }
-
-	// The Cosmos client instance
+{	
 	public CosmosClient CosmosClient { get; private set; }
-	private string DatabaseName => "familyrecipes";
-	private string ContainerName => "Recipe";
-
 	public Database Database { get; private set; }
-
 	public Container Container { get; private set; }
 
-	public CosmosDB(IConfiguration configuration)
+	private string EndPointUrl { get; init; }
+	private string ApiKey { get; init; }
+	private static string DatabaseName => "familyrecipes";
+	private static string ContainerName => "Recipe";	
+	private readonly IConfiguration _config;
+	private readonly ILogger<CosmosDB> _log;
+
+	/// <summary>
+	/// Sets up start of Cosmos DB settings. Then connects us to our DB.
+	/// </summary>
+	/// <param name="configuration">Our Configuration</param>
+	public CosmosDB(IConfiguration configuration, ILogger<CosmosDB> logger)
 	{
 		_config = configuration;
+		_log = logger;
+
 		EndPointUrl = _config["EndpointUri"];
 		ApiKey = _config["PrimaryKey"];
-		//_connectionString = $"{EndPointUrl}{ApiKey}";
+		
 		ConnectToDB();
 	}
 
-
-	// Connect to DB
+	/// <summary>
+	/// Sets up our Cosmos DB connection and this class.
+	/// </summary>
 	private void ConnectToDB()
 	{
-		Console.WriteLine("Connecting to db");
+		if (string.IsNullOrEmpty(EndPointUrl) || string.IsNullOrEmpty(ApiKey))
+		{
+			_log.LogError("Not able to connect to our Cosmos DB. Missing the EndpointURL or API Key.");
+			throw new Exception("Connection to the Cosmos DB Error. please check Logs");
+		}
+
 		CosmosClient = new(EndPointUrl, ApiKey);
 
 		CosmosClient.CreateDatabaseIfNotExistsAsync(id: ContainerName).Wait();
-
 		Database = CosmosClient.GetDatabase(DatabaseName);
 		Container = CosmosClient.GetContainer(DatabaseName, ContainerName);
-		Console.WriteLine($"Connection good : {Database} {Container}");
+
+		_log.LogInformation("Connection to Cosmos DB success.");
 	}
-	
-	
-	// was part of hosted works to connect but not needed
-	//public Task StartAsync(CancellationToken cancellationToken)
-	//{
-	//	// setup the connection
-	//	Console.WriteLine("Starting Async Cosmos DB...");
-
-	//	CosmosClientCon = new(EndPointUrl, ApiKey);
-
-	//	Console.WriteLine("Connected...");
-
-	//	_database = CosmosClientCon.GetDatabase(_databaseName);
-
-	//	_container = CosmosClientCon.GetContainer(_containerName, _database.Id);
-
-	//	Console.WriteLine($"databse id = {_database.Id} container id = {_container.Id}");
-
-	//	return Task.CompletedTask;
-	//}
-
-	//public Task StopAsync(CancellationToken cancellationToken)
-	//{
-	//	// Stop the connection
-	//	Console.WriteLine("STOPPING Async Cosmos DB...");
-
-	//	CosmosClientCon = null;
-
-	//	return Task.CompletedTask;
-	//}
 }
