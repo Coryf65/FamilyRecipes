@@ -1,12 +1,8 @@
-using Serilog;
-using Microsoft.Azure.Cosmos;
 using FamilyRecipes.API.Repositories;
-using System.Data;
+using Serilog;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -17,7 +13,7 @@ builder.Services.AddSwaggerGen(swag =>
 	// setting up xml and comments for Swagger
 	var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
 	var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-	swag.IncludeXmlComments(xmlPath);	
+	swag.IncludeXmlComments(xmlPath);
 });
 
 builder.Services.AddSingleton<IDBConnector, CosmosDB>();
@@ -29,10 +25,10 @@ builder.Services.AddCors(options =>
 	options.AddPolicy("AllowAll", b => b.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()); // configure a policy
 });
 
-builder.Host.UseSerilog((context, loggerConfig) => 
+builder.Host.UseSerilog((context, loggerConfig) =>
 		loggerConfig.WriteTo.Console()
 		.ReadFrom.Configuration(context.Configuration)
-	);
+);
 
 var app = builder.Build();
 
