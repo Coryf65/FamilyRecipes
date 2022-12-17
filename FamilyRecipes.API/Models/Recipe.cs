@@ -10,7 +10,7 @@ public record Recipe
     /// <summary>
     /// The ID for this Recipe as a GUID
     /// </summary>
-    public Guid Id { get; init; } // init allows set on init but not after
+    public Guid Id { get; set; } // init allows set on init but not after
 	/// <summary>
 	/// The Date Time this recipe was added into the DB, in UTC
 	/// </summary>

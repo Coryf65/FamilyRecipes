@@ -61,4 +61,27 @@ public class RecipeController : ControllerBase
 
 		return Ok(result);
 	}
+
+	// POST api/items
+	[HttpPost]
+	public async Task<IActionResult> Create([FromBody] Recipe recipe)
+	{
+		recipe.Id = Guid.NewGuid();
+		await _cosmosDbService.AddAsync(recipe);
+		return CreatedAtAction(nameof(Get), new { id = recipe.Id }, recipe);
+	}
+	// PUT api/items/5
+	[HttpPut("{id}")]
+	public async Task<IActionResult> Edit([FromBody] Recipe recipe)
+	{
+		await _cosmosDbService.UpdateAsync(recipe.Id, recipe);
+		return NoContent();
+	}
+	// DELETE api/items/5
+	[HttpDelete("{id}")]
+	public async Task<IActionResult> Delete(Guid id)
+	{
+		await _cosmosDbService.DeleteAsync(id);
+		return NoContent();
+	}
 }
