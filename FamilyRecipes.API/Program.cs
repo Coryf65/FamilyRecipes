@@ -25,6 +25,7 @@ builder.Services.AddCors(options =>
 	options.AddPolicy("AllowAll", b => b.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()); // configure a policy
 });
 
+// Setting up the Serilog settings using our settings in appsettings
 builder.Host.UseSerilog((context, loggerConfig) =>
 		loggerConfig.WriteTo.Console()
 		.ReadFrom.Configuration(context.Configuration)
