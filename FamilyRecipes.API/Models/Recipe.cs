@@ -1,4 +1,7 @@
-﻿using System.Drawing;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 
 namespace FamilyRecipes.API.Models;
 
@@ -10,7 +13,9 @@ public record Recipe
     /// <summary>
     /// The ID for this Recipe as a GUID
     /// </summary>
-    public Guid Id { get; set; } // init allows set on init but not after
+    [Key]
+	[JsonProperty(PropertyName = "id")]
+	public Guid Id { get; set; } // init allows set on init but not after
 	/// <summary>
 	/// The Date Time this recipe was added into the DB, in UTC
 	/// </summary>
@@ -27,10 +32,10 @@ public record Recipe
     /// If available the orginal URL for the Recipe
     /// </summary>
     public string URL { get; set; }
-    /// <summary>
-    /// Some Glamor shot / Images of this recipe in process or done
-    /// </summary>
-    public Image[] Images { get; set; }
+    ///// <summary>
+    ///// Some Glamor shot / Images of this recipe in process or done
+    ///// </summary>
+    //public Image[] Images { get; set; }
     /// <summary>
     /// A Description of what this Recipe is
     /// </summary>

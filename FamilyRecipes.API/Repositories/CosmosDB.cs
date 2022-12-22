@@ -43,7 +43,7 @@ public class CosmosDB : IDBConnector
 
 		CosmosClient = new(EndPointUrl, ApiKey);
 
-		CosmosClient.CreateDatabaseIfNotExistsAsync(id: ContainerName).Wait();
+		CosmosClient.CreateDatabaseIfNotExistsAsync(id: DatabaseName).Wait();
 		Database = CosmosClient.GetDatabase(DatabaseName);
 		Container = CosmosClient.GetContainer(DatabaseName, ContainerName);
 
