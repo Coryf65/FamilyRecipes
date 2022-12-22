@@ -1,8 +1,8 @@
-﻿using FamilyRecipes.API.Models;
-using FamilyRecipes.API.Repositories;
+﻿using FamilyRecipes.API.Interfaces;
+using FamilyRecipes.API.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FamilyRecipes.API.Controllers;
+namespace FamilyRecipes.API.Repositories;
 
 /// <summary>
 /// The Controller to handle actions with the Recipes and DB
@@ -62,7 +62,6 @@ public class RecipeController : ControllerBase
 		return Ok(result);
 	}
 
-	// POST api/items
 	/// <summary>
 	/// Create a new Recipe
 	/// </summary>
@@ -70,21 +69,18 @@ public class RecipeController : ControllerBase
 	/// <returns></returns>
 	[HttpPost]
 	public async Task<IActionResult> Create([FromBody] Recipe recipe)
-	{
+	{		
 		recipe.Id = Guid.NewGuid();
-		//recipe.Ingredients.All(i => i.Id == Guid.NewGuid());
 
 		foreach (var i in recipe.Ingredients)
 		{
 			i.Id = Guid.NewGuid();
 		}
 
-
 		await _cosmosDbService.AddAsync(recipe);
 		return CreatedAtAction(nameof(Get), new { id = recipe.Id }, recipe);
 	}
 
-	// PUT api/items/5
 	/// <summary>
 	/// Update an existing Recipe 
 	/// </summary>
@@ -97,7 +93,6 @@ public class RecipeController : ControllerBase
 		return NoContent();
 	}
 
-	// DELETE api/items/5
 	/// <summary>
 	/// Delete a Recipe by GUID
 	/// </summary>

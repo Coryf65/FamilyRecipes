@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Cosmos;
+﻿using FamilyRecipes.API.Interfaces;
+using Microsoft.Azure.Cosmos;
 
 namespace FamilyRecipes.API.Repositories;
 
