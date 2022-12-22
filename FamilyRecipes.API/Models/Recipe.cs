@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
-using System.Drawing;
 
 namespace FamilyRecipes.API.Models;
 
@@ -14,54 +13,52 @@ public record Recipe
     /// The ID for this Recipe as a GUID
     /// </summary>
     [Key]
-	[JsonProperty(PropertyName = "id")]
-	public Guid Id { get; set; } // init allows set on init but not after
+	[JsonProperty(PropertyName = "id")]   
+	public Guid Id { get; set; }
+
 	/// <summary>
 	/// The Date Time this recipe was added into the DB, in UTC
 	/// </summary>
 	public DateTime CreatedDateUTC { get; set; }
-    /// <summary>
-    /// The Recipes Name
-    /// </summary>
+
     public string Name { get; set; }
-    /// <summary>
-    /// The Author / Person whom created this Recipe
-    /// </summary>
-    public string Author { get; set; }
+	
+	public string Author { get; set; }
+
     /// <summary>
     /// If available the orginal URL for the Recipe
     /// </summary>
     public string URL { get; set; }
-    ///// <summary>
-    ///// Some Glamor shot / Images of this recipe in process or done
-    ///// </summary>
-    //public Image[] Images { get; set; }
-    /// <summary>
-    /// A Description of what this Recipe is
-    /// </summary>
-    public string Description { get; set; }
+
+    // TODO: Need to figure how to store images in cosmosdb / return them, maybe as binary data?
+	///// <summary>
+	///// Some Glamor shot / Images of this recipe in process or done
+	///// </summary>
+	//public Image[] Images { get; set; }
+
+	public string Description { get; set; }
+
     /// <summary>
     /// Total Time it takes to Prep in Minutes
     /// </summary>
     public int PrepTimeMins { get; set; }
+
     /// <summary>
     /// Total time it takes to Cook in Minutes
     /// </summary>
     public int CookTimeMins { get; set; }
+
     /// <summary>
     /// Total time all together to complete this recipe
     /// </summary>
     public int TotalTimeMins { get; set; }
+
     /// <summary>
     /// Your Rating of this Recipe
     /// </summary>
     public double Rating { get; set; }
-    /// <summary>
-    /// All Ingredients this recipe needs to complete
-    /// </summary>
+    
     public Ingredient[] Ingredients { get; set; }
-    /// <summary>
-    /// A step by step instructions how to make / cook
-    /// </summary>
-    public string[] Instructions { get; set; }
+	
+	public string[] Instructions { get; set; }
 }

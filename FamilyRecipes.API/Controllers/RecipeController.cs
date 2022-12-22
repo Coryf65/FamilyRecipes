@@ -1,4 +1,6 @@
-﻿using FamilyRecipes.API.Interfaces;
+﻿using AutoMapper;
+using FamilyRecipes.API.DTOs;
+using FamilyRecipes.API.Interfaces;
 using FamilyRecipes.API.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,16 +15,18 @@ public class RecipeController : ControllerBase
 {
 	private readonly ILogger<RecipeController> _log;
 	private readonly ICosmosService _cosmosDbService;
+	private readonly IMapper _mapper;
 
 	/// <summary>
 	/// Recipe Constructor to get DI items
 	/// </summary>
 	/// <param name="logger"></param>
 	/// <param name="cosmosDbService"></param>
-	public RecipeController(ILogger<RecipeController> logger, ICosmosService cosmosDbService)
+	public RecipeController(ILogger<RecipeController> logger, ICosmosService cosmosDbService, IMapper mapper)
 	{
 		_log = logger;
 		_cosmosDbService = cosmosDbService;
+		_mapper = mapper;
 	}
 
 	/// <summary>
@@ -65,11 +69,13 @@ public class RecipeController : ControllerBase
 	/// <summary>
 	/// Create a new Recipe
 	/// </summary>
-	/// <param name="recipe">All Recipe Data</param>
+	/// <param name="recipeDto">All Recipe Data</param>
 	/// <returns></returns>
 	[HttpPost]
-	public async Task<ActionResult> Create([FromBody] Recipe recipe)
+	public async Task<ActionResult> Create([FromBody] RecipeDto recipeDto)
 	{
+		var recipe = _mapper.Map<Recipe>(recipeDto);
+
 		recipe.Id = Guid.NewGuid();
 
 		foreach (var i in recipe.Ingredients)

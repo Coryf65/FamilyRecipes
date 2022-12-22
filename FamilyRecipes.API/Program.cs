@@ -1,3 +1,4 @@
+using FamilyRecipes.API.Configurations;
 using FamilyRecipes.API.Interfaces;
 using FamilyRecipes.API.Repositories;
 using FamilyRecipes.API.Services;
@@ -20,6 +21,7 @@ builder.Services.AddSwaggerGen(swag =>
 
 builder.Services.AddSingleton<IDBConnector, CosmosDB>();
 builder.Services.AddSingleton<ICosmosService, CosmosService>();
+builder.Services.AddAutoMapper(typeof(MapperConfig)); // Using our AutoMapper to swap between DTO and class
 
 // Cross-Origin Resource Sharing (CORS) is an HTTP feature that enables a web application running under one domain to access resources in another domain.
 builder.Services.AddCors(options =>
