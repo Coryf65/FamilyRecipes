@@ -34,7 +34,7 @@ public class RecipeController : ControllerBase
 	[ProducesResponseType(StatusCodes.Status200OK)]
 	[ProducesResponseType(StatusCodes.Status400BadRequest)]
 	[HttpGet]
-	public async Task<IActionResult> List()
+	public async Task<ActionResult> List()
 	{
 		//return Ok(await _cosmosDbService.GetMultipleAsync("select * from c"));
 
@@ -52,7 +52,7 @@ public class RecipeController : ControllerBase
 	/// <param name="id">The Recipes id / GUID</param>
 	/// <returns>The Recipe found or Not Found</returns>
 	[HttpGet("{id}")]
-	public async Task<IActionResult> Get(Guid id)
+	public async Task<ActionResult> Get(Guid id)
 	{
 		Recipe result = await _cosmosDbService.GetAsync(id);
 
@@ -68,8 +68,8 @@ public class RecipeController : ControllerBase
 	/// <param name="recipe">All Recipe Data</param>
 	/// <returns></returns>
 	[HttpPost]
-	public async Task<IActionResult> Create([FromBody] Recipe recipe)
-	{		
+	public async Task<ActionResult> Create([FromBody] Recipe recipe)
+	{
 		recipe.Id = Guid.NewGuid();
 
 		foreach (var i in recipe.Ingredients)
@@ -87,7 +87,7 @@ public class RecipeController : ControllerBase
 	/// <param name="recipe">All Recipe Data</param>
 	/// <returns></returns>
 	[HttpPut("{id}")]
-	public async Task<IActionResult> Edit([FromBody] Recipe recipe)
+	public async Task<ActionResult> Edit([FromBody] Recipe recipe)
 	{
 		await _cosmosDbService.UpdateAsync(recipe.Id, recipe);
 		return NoContent();
@@ -99,7 +99,7 @@ public class RecipeController : ControllerBase
 	/// <param name="id"></param>
 	/// <returns></returns>
 	[HttpDelete("{id}")]
-	public async Task<IActionResult> Delete(Guid id)
+	public async Task<ActionResult> Delete(Guid id)
 	{
 		await _cosmosDbService.DeleteAsync(id);
 		return NoContent();
