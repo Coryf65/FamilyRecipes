@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FamilyRecipes.API.DTOs;
 
+// TODO: If needed create a DTO per update/create or others needed (might do)
+
 /// <summary>
 /// The DTO for the <c>Recipe</c>
 /// </summary>

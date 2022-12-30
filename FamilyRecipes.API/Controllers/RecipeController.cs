@@ -45,7 +45,7 @@ public class RecipeController : ControllerBase
 		IEnumerable<Recipe> result = await _cosmosDbService.GetMultipleAsync("select * from c");
 
 		if (result is null)
-			return BadRequest("No Recipes found.");
+			return NotFound("No Recipes found.");
 
 		return Ok(result);
 	}

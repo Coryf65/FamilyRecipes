@@ -52,4 +52,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+try
+{
+	app.Run();
+}
+catch (Exception error)
+{
+	Log.Error("Major Error '{innerException}' : '{errorMessage}'", error.InnerException, error.Message);
+}
