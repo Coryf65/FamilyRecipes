@@ -1,0 +1,56 @@
+﻿@page "/apitest"
+
+@inject IHttpClientFactory _clientFactory
+
+<h3>Apitest</h3>
+
+<p>Testing a connection to my api</p>
+
+@if (!string.IsNullOrEmpty(error))
+{
+	<div class="h2">@error</div>
+}
+
+@if (recipe is null)
+{
+	<div class="h4">Loading...</div>
+} else
+{
+	<div>
+		<p>Id @recipe.Id</p>
+		<p>Title @recipe.Name</p>
+		<p>Description @recipe.Description</p>
+		<p>Ingredients</p>
+		@foreach (var i in recipe.Ingredients)
+		{
+			<p>@i.Id</p>
+			<p>@i.Name</p>
+			<p>@i.Amount</p>
+		}
+
+	</div>
+}
+
+@code {
+	RecipeModel recipe;
+	string error = string.Empty;
+
+	// Runs after injection before page is init
+	protected override async Task OnInitializedAsync()
+	{
+		// Fullway to do this
+		var request = new HttpRequestMessage(
+			HttpMethod.Get,
+			"https://localhost:7114/api/Recipe/11ab1d8c-0605-47c9-8879-a45a89da63b5"
+		);
+
+		var client = _clientFactory.CreateClient();
+
+		HttpResponseMessage response = await client.SendAsync(request);
+
+		if (!response.IsSuccessStatusCode)
+			error = $"Error getting recipe data: {response.ReasonPhrase}";	
+
+		recipe = await response.Content.ReadFromJsonAsync<RecipeModel>();
+	}
+}
