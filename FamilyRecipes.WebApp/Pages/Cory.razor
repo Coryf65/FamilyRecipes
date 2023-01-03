@@ -1,0 +1,20 @@
+﻿@page "/cory"
+
+
+<h3>Cory</h3>
+
+<button @onclick="GreetMe">Click me!</button>
+
+@Message
+
+@code {
+    string Message { get; set; }
+    bool isServer { get; set; } = false;
+    IJSRuntime jSRuntime { get; set; }
+
+    void GreetMe()
+    {
+        isServer = this.jSRuntime is IJSInProcessRuntime;
+        Message = $"Is this a WASM '{isServer}'";
+    }    
+}
