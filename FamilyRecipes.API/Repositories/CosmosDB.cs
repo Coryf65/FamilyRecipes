@@ -3,6 +3,9 @@ using Microsoft.Azure.Cosmos;
 
 namespace FamilyRecipes.API.Repositories;
 
+/// <summary>
+/// Setup and configure Cosmos DB
+/// </summary>
 public class CosmosDB : IDBConnector
 {	
 	public CosmosClient CosmosClient { get; private set; }
