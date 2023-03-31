@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyRecipes.API", "Family
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyRecipes.WebApp", "FamilyRecipes.WebApp\FamilyRecipes.WebApp.csproj", "{0C25EC0D-DB79-40B7-93E3-239B550EDECB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyRecipes.Tests", "FamilyRecipes.Tests\FamilyRecipes.Tests.csproj", "{93DFD75B-0BDD-44F4-9F56-38B0DB806633}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyRecipes.Tests", "FamilyRecipes.Tests\FamilyRecipes.Tests.csproj", "{93DFD75B-0BDD-44F4-9F56-38B0DB806633}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -18,4 +18,8 @@ architecture
 - FamilyRecipes.WebApp -> a Blazor Web App for users to interact with the API
 - Cosmos DB on Azure
 
-## 
+## TODOs
+
+- add in Authentication and Authorization [docs](https://learn.microsoft.com/en-us/aspnet/core/blazor/security/server/?view=aspnetcore-7.0&tabs=visual-studio)
+- use [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/) for styles
+- demo images from [lorem picsum](https://picsum.photos/)
