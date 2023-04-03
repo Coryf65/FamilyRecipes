@@ -1,60 +1,38 @@
-﻿using System.Text.Json;
+﻿using System.Net.Http;
+using System.Text.Json;
 using FamilyRecipes.WebApp.Models;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Net.Http.Headers;
 
 namespace FamilyRecipes.WebApp.Data;
 
 public class RecipeService
 {
+
+    private HttpClient _httpClient;
+
     // cory simple method of getting recipe
     public async void GetRecipe()
     {
+        //string baseUrl = configuration["DataverseConfig:BaseUri"];
+        string baseUrl = "https://localhost:7114";
 
+        // Get the HttpClient
+        _httpClient = HttpClientFactory.CreateClient();
 
-        //// Fullway to do this
-        //var request = new HttpRequestMessage(
-        //    HttpMethod.Get,
-        //    "https://localhost:7114/api/Recipe/11ab1d8c-0605-47c9-8879-a45a89da63b5"
-        //);
-
-        //HttpClient client = _clientFactory.CreateClient();
-
-        //HttpResponseMessage response = await client.SendAsync(request);
-
-        //if (!response.IsSuccessStatusCode)
-        //    error = $"Error getting recipe data: {response.ReasonPhrase}";
-
-        //return await response.Content.ReadFromJsonAsync<RecipeModel>();
-
-
+        // Send the request
+        var dataRequest = await _httpClient.GetAsync($"{baseUrl}api/data/v9.2/WhoAmI");
     }
 
-    private readonly IHttpClientFactory _httpClientFactory;
     public IEnumerable<RecipeModel>? Recipe { get; set; }
 
-    public async Task OnGet()
+    public async Task<RecipeModel> GetRecipeByID(string guid = "11ab1d8c-0605-47c9-8879-a45a89da63b5")
     {
-        var httpRequestMessage = new HttpRequestMessage(
-            HttpMethod.Get,
-            "https://localhost:7114/api/Recipe/11ab1d8c-0605-47c9-8879-a45a89da63b5")
-        {
-            Headers =
-            {
-                { HeaderNames.Accept, "application/json" },
-                { HeaderNames.UserAgent, "BlazorAppCory" }
-            }
-        };
+        var client = ClientFactory.CreateClient("recipeapi");
+       
+        Recipe = await client.GetFromJsonAsync<IEnumerable<RecipeModel>>($"/api/Recipe/{guid}");
 
-        var httpClient = _httpClientFactory.CreateClient();
-        var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
-
-        if (httpResponseMessage.IsSuccessStatusCode)
-        {
-            using var contentStream =
-                await httpResponseMessage.Content.ReadAsStreamAsync();
-
-            Recipe = await JsonSerializer.DeserializeAsync<IEnumerable<RecipeModel>>(contentStream);
-        }
+        return (RecipeModel)Recipe;
     }
 
 

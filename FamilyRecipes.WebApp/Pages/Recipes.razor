@@ -1,24 +1,32 @@
 ﻿@page "/recipes"
 
+@using FamilyRecipes.WebApp.Data
+@inject RecipeService RecipeService
+
 <h3>Recipes</h3>
 
-<p>search and find a recipe that is interesting. a card view with images. description header and ... time to make?</p>
+<p>Plans: search and find a recipe that is interesting. a card view with images. description header and ... time to make?</p>
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col">
         <div class="card h-100">
             <img src="https://picsum.photos/200/300" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                <h5 class="card-title">@recipe.Name</h5>
+                <p class="card-text">@recipe.Description</p>
             </div>
             <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
+                <small class="text-muted">@recipe.Author</small>
             </div>
         </div>
     </div>
 </div>
 
 @code {
-    
+    private RecipeModel? recipe;
+
+    protected override async Task OnInitializedAsync()
+    {
+        recipe = await RecipeService.GetRecipeByID("11ab1d8c-0605-47c9-8879-a45a89da63b5");
+    }       
 }
