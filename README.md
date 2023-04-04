@@ -21,3 +21,4 @@
 - add in Authentication and Authorization [docs](https://learn.microsoft.com/en-us/aspnet/core/blazor/security/server/?view=aspnetcore-7.0&tabs=visual-studio)
 - demo images from [lorem picsum](https://picsum.photos/)
 - Add links to images in the NOSQL document that ties to Azure Blob storage
+https://learn.microsoft.com/en-us/azure/storage/blobs/blob-upload-function-trigger?tabs=azure-portal
