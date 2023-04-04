@@ -6,7 +6,28 @@
 
 <h3>Recipes</h3>
 
-<p>Plans: search and find a recipe that is interesting. a card view with images. description header and ... time to make?</p>
+<p>search and find a recipe that is interesting. a card view with images. description header and ... time to make?</p>
+
+<div class="row mb-3">
+    <div class="col-md-7">
+
+            <NavLink href="/recipe/createrecipe" class="btn btn-sm btn-success mb-2">Add Recipe</NavLink>
+        
+    </div>
+    <div class="input-group col-md-5 text-md-right">
+        <input name="RecipeSearchInput" type="text" class="form-control" placeholder="Recipe Name" @bind="this.SearchTerm" @onkeyup="SearchBoxKeyPress" />
+        <div class="input-group-btn">
+            <button name="RecipeSearchButton" class="btn btn-default" @onclick="SearchClick">
+                <i class="oi oi-magnifying-glass" title="search" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="input-group-btn">
+            <button name="RecipeSearchClear" class="btn btn-default" @onclick="ClearSearch">
+                <i class="oi oi-x" title="clear" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</div>
 
 @if (_recipe is not null)
 {
@@ -45,5 +66,34 @@
     private void ViewRecipe(RecipeModel recipe)
     {
         UriHelper.NavigateTo("/viewrecipe/" + recipe.Id);
+    }
+
+    // testing zone
+
+    [Parameter]
+    public string SearchTerm { get; set; } = string.Empty;
+
+    private void ClearSearch()
+    {
+        Console.WriteLine("Clear Clicked");
+    }
+
+    private void SearchClick()
+    {
+        Console.WriteLine("Search Clicked");
+    }
+
+    /// <summary>
+    /// Check for the press of the enter key, then Search
+    /// </summary>
+    /// <param name="ev">Keyboard events</param>
+    /// <returns>results from the search terms</returns>
+    protected async Task SearchBoxKeyPress(KeyboardEventArgs ev)
+    {
+        if (ev.Key == "Enter")
+        {
+            Console.WriteLine("enter pressed");
+            //await SearchClick();
+        }
     }
 }
