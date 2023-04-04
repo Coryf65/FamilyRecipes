@@ -1,43 +1,45 @@
-﻿using System.Net.Http;
-using System.Text.Json;
-using FamilyRecipes.WebApp.Models;
-using Microsoft.AspNetCore.Components;
-using Microsoft.Net.Http.Headers;
+﻿using FamilyRecipes.WebApp.Models;
 
 namespace FamilyRecipes.WebApp.Data;
 
+/// <summary>
+/// Service that will handle Recipe calls to API
+/// </summary>
 public class RecipeService
 {
-
     private HttpClient _httpClient;
 
-    // cory simple method of getting recipe
-    public async void GetRecipe()
+    public RecipeService(HttpClient httpClient)
     {
-        //string baseUrl = configuration["DataverseConfig:BaseUri"];
-        string baseUrl = "https://localhost:7114";
+        _httpClient = httpClient;
+    }
 
-        // Get the HttpClient
-        _httpClient = HttpClientFactory.CreateClient();
-
+    /// <summary>
+    /// Demo Method to pull one recipe, bbq chicken
+    /// </summary>
+    /// <returns>One BBQ Chicken Recipe that is used for testing</returns>
+    public async Task<RecipeModel> GetBBQRecipe()
+    {
         // Send the request
-        var dataRequest = await _httpClient.GetAsync($"{baseUrl}api/data/v9.2/WhoAmI");
+        var dataRequest = await _httpClient.GetFromJsonAsync<RecipeModel>("/api/Recipe/11ab1d8c-0605-47c9-8879-a45a89da63b5");
+
+        return dataRequest;
     }
 
-    public IEnumerable<RecipeModel>? Recipe { get; set; }
-
-    public async Task<RecipeModel> GetRecipeByID(string guid = "11ab1d8c-0605-47c9-8879-a45a89da63b5")
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="guid"></param>
+    /// <returns></returns>
+    public async Task<RecipeModel> GetRecipeByID(string guid)
     {
-        var client = ClientFactory.CreateClient("recipeapi");
-       
-        Recipe = await client.GetFromJsonAsync<IEnumerable<RecipeModel>>($"/api/Recipe/{guid}");
+        var recipe = await _httpClient.GetFromJsonAsync<RecipeModel>($"/api/Recipe/{guid}");
 
-        return (RecipeModel)Recipe;
+        return recipe;
     }
 
 
-
-    // Get all recipes 
+    // Get all recipes
 
 
     // get recipe by name

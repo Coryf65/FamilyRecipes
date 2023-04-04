@@ -2,31 +2,48 @@
 
 @using FamilyRecipes.WebApp.Data
 @inject RecipeService RecipeService
+@inject Microsoft.AspNetCore.Components.NavigationManager UriHelper
 
 <h3>Recipes</h3>
 
 <p>Plans: search and find a recipe that is interesting. a card view with images. description header and ... time to make?</p>
 
-<div class="row row-cols-1 row-cols-md-3 g-4">
-    <div class="col">
-        <div class="card h-100">
-            <img src="https://picsum.photos/200/300" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">@recipe.Name</h5>
-                <p class="card-text">@recipe.Description</p>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">@recipe.Author</small>
+@if (_recipe is not null)
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+            <div class="card h-100">
+                @*<img src="https://picsum.photos/200/300" class="card-img-top" alt="...">*@
+                <img src="https://www.familyfreshmeals.com/wp-content/uploads/2014/06/The-Best-Crockpot-BBQ-Chicken-Family-Fresh-Meals-.png" class="card-img-top" alt="...">
+                <div class="card-body">
+
+                    <strong><h5 class="card-title">@_recipe.Name</h5></strong>
+                    <p class="card-text">@_recipe.Description</p>
+                    <button @onclick="@(() => ViewRecipe(_recipe))">View Recipe</button>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">@_recipe.Author</small> <a href="@_recipe.Url">Authors Site</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+} else
+{
+    <p>Loading ...</p>
+}
 
 @code {
-    private RecipeModel? recipe;
+    private RecipeModel? _recipe { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        recipe = await RecipeService.GetRecipeByID("11ab1d8c-0605-47c9-8879-a45a89da63b5");
-    }       
+        _recipe = await RecipeService.GetBBQRecipe();
+        StateHasChanged();
+    }
+
+    //handle click of a certain recipe
+    private void ViewRecipe(RecipeModel recipe)
+    {
+        UriHelper.NavigateTo("/viewrecipe/" + recipe.Id);
+    }
 }

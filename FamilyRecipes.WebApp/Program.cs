@@ -1,6 +1,4 @@
 using FamilyRecipes.WebApp.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,13 +7,16 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<RecipeService>();
-builder.Services.AddHttpClient("recipeapi", client =>
+
+builder.Services.AddHttpClient<RecipeService>(client =>
 {
-	client.BaseAddress = new Uri("https://localhost:7114");
+    client.BaseAddress = new Uri("https://localhost:7114");
 });
 
-// cory testing
-builder.Services.AddHttpClient();
+//builder.Services.AddHttpClient("recipeapi", client =>
+//{
+//	client.BaseAddress = new Uri("https://localhost:7114");
+//});
 
 var app = builder.Build();
 
