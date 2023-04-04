@@ -16,6 +16,7 @@
 - FamilyRecipes.WebApp -> The FrontEnd, a Blazor Web App interacts with the API
 - FamilyRecipes.Tests -> the XUnit part to run tests on my project
 - Cosmos DB on Azure -> The NOSQL DB to store data
+- Azure Blob Storage for images
 
 #### TODOs
 - add in Authentication and Authorization [docs](https://learn.microsoft.com/en-us/aspnet/core/blazor/security/server/?view=aspnetcore-7.0&tabs=visual-studio)
